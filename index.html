@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElectroQuiz Pro — Complete 1,153 PDF Question Bank & Interactive Quiz Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar" aria-label="Main Sidebar Navigation">
+      <div class="sidebar-brand">
+        <div class="brand-logo" id="brandHomeBtn" title="Go to Home Page">
+          <div class="brand-icon">EQ</div>
+          <div>
+            <div>ElectroQuiz Pro</div>
+            <div style="font-size: 0.7rem; font-weight: 500; color: var(--text-muted);">1,153 PDF Questions</div>
+          </div>
+        </div>
+        <button id="sidebarCloseBtn" class="sidebar-close-btn" aria-label="Close Sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-content">
+        <!-- Main Navigation -->
+        <div>
+          <div class="nav-section-title">Main Menu</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item active" data-nav="home">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"/>
+                  </svg>
+                  <span>Home Dashboard</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Attend Quiz Modes -->
+        <div>
+          <div class="nav-section-title">Attend Quiz Modes</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item" data-nav="quiz-200">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                  </svg>
+                  <span>1. 200 Question Quiz</span>
+                </span>
+                <span class="nav-badge" id="navBadge200">0/200</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" data-nav="quiz-500">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  <span>2. 500 Question Quiz</span>
+                </span>
+                <span class="nav-badge" id="navBadge500">0/500</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" data-nav="quiz-1153">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                  <span>3. Complete PDF Quiz</span>
+                </span>
+                <span class="nav-badge" id="navBadge1153">0/1153</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Study & Review Tools -->
+        <div>
+          <div class="nav-section-title">Review & Question Bank</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item" data-nav="mistakes">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/>
+                  </svg>
+                  <span>Mistake Deck</span>
+                </span>
+                <span class="nav-badge" id="navBadgeMistakes">0</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" data-nav="bookmarks">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  <span>Bookmarked Questions</span>
+                </span>
+                <span class="nav-badge" id="navBadgeBookmarks">0</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" data-nav="explorer">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                  </svg>
+                  <span>All 1,153 PDF Explorer</span>
+                </span>
+                <span class="nav-badge">1153</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" data-nav="cache">
+                <span class="nav-item-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                  </svg>
+                  <span>Cache & Progress</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer: Live Cache Indicator -->
+      <div class="sidebar-footer">
+        <div class="cache-status-pill">
+          <span><span class="cache-dot"></span>Auto-Cache Active</span>
+          <span id="sidebarLastSaved">Saved</span>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-muted);">
+          Keys: <strong>1-4</strong> or <strong>A-D</strong> to answer, <strong>←/→</strong> to navigate, <strong>F</strong> to flag.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Header Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open Sidebar Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+          </button>
+          <div class="page-breadcrumb" id="topbarTitle">Home Dashboard</div>
+        </div>
+
+        <div class="topbar-right">
+          <button id="autoAdvanceBtn" class="icon-btn" title="Toggle Auto-Next after answering">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/>
+            </svg>
+            <span id="autoAdvanceLabel">Auto-Next: Off</span>
+          </button>
+
+          <button id="themeToggleBtn" class="icon-btn" title="Switch Dark / Light Theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <span id="themeToggleLabel">Light Mode</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Views Container -->
+      <main class="view-container">
+
+        <!-- =================================================================
+             VIEW 1: HOME DASHBOARD
+             ================================================================= -->
+        <section id="view-home" class="view-section active">
+          <div class="hero-banner">
+            <div class="hero-text">
+              <div class="hero-badge">
+                <span>100% Verified PDF Question Bank • Pages 1–199</span>
+              </div>
+              <h1 class="hero-title">Electronics &amp; Communication Master Quiz</h1>
+              <p class="hero-subtitle">
+                Practice exclusivamente from the <strong>1,153 official PDF questions</strong> and verified answer key.
+                Choose a <strong>200 Question Quiz</strong>, <strong>500 Question Quiz</strong>, or the <strong>Complete 1,153 Question PDF Quiz</strong>.
+                Every answer is immediately highlighted in <strong style="color:#10b981;">Green</strong> and <strong style="color:#ef4444;">Red</strong> tile boxes, and your progress is automatically cached in your browser.
+              </p>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px; min-width:220px;">
+              <button class="btn btn-primary" id="heroQuickResumeBtn">
+                <span>Resume Last Active Quiz</span>
+              </button>
+              <button class="btn btn-secondary" data-goto="explorer">
+                <span>Browse All 1,153 Questions</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Overall Statistics Row -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">
+                <span>Total PDF Questions</span>
+                <span style="color:var(--accent-secondary);">Pages 1–191</span>
+              </div>
+              <div class="stat-value">1,153</div>
+              <div class="stat-sub">Official Answers from Pages 192–199</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">
+                <span>Unique Questions Mastered</span>
+                <span class="dot-green">Correct</span>
+              </div>
+              <div class="stat-value" id="homeStatMastered">0</div>
+              <div class="stat-sub" id="homeStatMasteredSub">0.0% of entire PDF bank</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">
+                <span>Overall Accuracy</span>
+                <span>All Modes</span>
+              </div>
+              <div class="stat-value" id="homeStatAccuracy">0%</div>
+              <div class="stat-sub" id="homeStatAnsweredSub">0 total answers recorded</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">
+                <span>Review Queue</span>
+                <span class="dot-red">Mistakes &amp; Flags</span>
+              </div>
+              <div class="stat-value" id="homeStatReviewCount">0</div>
+              <div class="stat-sub" id="homeStatReviewSub">0 mistakes • 0 bookmarked</div>
+            </div>
+          </div>
+
+          <!-- 3 Primary Quiz Modes Required by User -->
+          <div class="section-header">
+            <h2 class="section-title">Select a Quiz Mode to Attend</h2>
+            <span style="font-size:0.84rem; color:var(--text-secondary);">Progress is cached independently for each quiz mode</span>
+          </div>
+
+          <div class="quiz-modes-grid">
+            <!-- Mode 1: 200 Question Quiz -->
+            <div class="mode-card mode-200">
+              <div>
+                <div class="mode-header">
+                  <span class="mode-tag">Option 1 • Rapid Sprint</span>
+                  <span class="nav-badge live" id="cardStatus200">Ready</span>
+                </div>
+                <h3 class="mode-title">200 Question Quiz</h3>
+                <p class="mode-desc">
+                  Attend a focused 200-question assessment drawn strictly from the PDF. Choose sequential blocks (e.g. Q1–Q200, Q201–Q400) or a shuffled 200-question set.
+                </p>
+              </div>
+
+              <div class="mode-progress-box">
+                <div class="mode-progress-top">
+                  <span id="cardProgText200">0 / 200 Answered</span>
+                  <span id="cardAccText200">0% Accuracy</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-fill-correct" id="cardBarCorrect200" style="width: 0%"></div>
+                  <div class="progress-fill-wrong" id="cardBarWrong200" style="width: 0%"></div>
+                </div>
+                <div class="mode-stats-mini">
+                  <span><span class="dot-green">●</span> <span id="cardCorrect200">0</span> Correct</span>
+                  <span><span class="dot-red">●</span> <span id="cardWrong200">0</span> Wrong</span>
+                  <span>Remaining: <strong id="cardRem200">200</strong></span>
+                </div>
+              </div>
+
+              <div class="mode-options-row">
+                <label for="selectRange200">Question Set:</label>
+                <select id="selectRange200" class="mode-select">
+                  <option value="random">Random 200 from PDF (Shuffled)</option>
+                  <option value="1-200">Sequential: Q1 to Q200</option>
+                  <option value="201-400">Sequential: Q201 to Q400</option>
+                  <option value="401-600">Sequential: Q401 to Q600</option>
+                  <option value="601-800">Sequential: Q601 to Q800</option>
+                  <option value="801-1000">Sequential: Q801 to Q1000</option>
+                  <option value="954-1153">Sequential: Q954 to Q1153</option>
+                </select>
+              </div>
+
+              <div class="mode-actions">
+                <button class="btn btn-primary" data-launch-mode="200">
+                  <span id="btnLaunchLabel200">Start 200 Question Quiz</span>
+                </button>
+                <button class="btn btn-secondary" data-reset-mode="200" title="Start a fresh 200-question session">
+                  New / Reset
+                </button>
+              </div>
+            </div>
+
+            <!-- Mode 2: 500 Question Quiz -->
+            <div class="mode-card mode-500">
+              <div>
+                <div class="mode-header">
+                  <span class="mode-tag">Option 2 • Endurance Test</span>
+                  <span class="nav-badge live" id="cardStatus500">Ready</span>
+                </div>
+                <h3 class="mode-title">500 Question Quiz</h3>
+                <p class="mode-desc">
+                  Deep-dive 500-question marathon covering core electronics, digital logic, radar, and communication systems from the PDF.
+                </p>
+              </div>
+
+              <div class="mode-progress-box">
+                <div class="mode-progress-top">
+                  <span id="cardProgText500">0 / 500 Answered</span>
+                  <span id="cardAccText500">0% Accuracy</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-fill-correct" id="cardBarCorrect500" style="width: 0%"></div>
+                  <div class="progress-fill-wrong" id="cardBarWrong500" style="width: 0%"></div>
+                </div>
+                <div class="mode-stats-mini">
+                  <span><span class="dot-green">●</span> <span id="cardCorrect500">0</span> Correct</span>
+                  <span><span class="dot-red">●</span> <span id="cardWrong500">0</span> Wrong</span>
+                  <span>Remaining: <strong id="cardRem500">500</strong></span>
+                </div>
+              </div>
+
+              <div class="mode-options-row">
+                <label for="selectRange500">Question Set:</label>
+                <select id="selectRange500" class="mode-select">
+                  <option value="random">Random 500 from PDF (Shuffled)</option>
+                  <option value="1-500">Sequential: Q1 to Q500</option>
+                  <option value="501-1000">Sequential: Q501 to Q1000</option>
+                  <option value="654-1153">Sequential: Q654 to Q1153</option>
+                </select>
+              </div>
+
+              <div class="mode-actions">
+                <button class="btn btn-primary" data-launch-mode="500">
+                  <span id="btnLaunchLabel500">Start 500 Question Quiz</span>
+                </button>
+                <button class="btn btn-secondary" data-reset-mode="500" title="Start a fresh 500-question session">
+                  New / Reset
+                </button>
+              </div>
+            </div>
+
+            <!-- Mode 3: Complete 1,153 Question PDF Quiz -->
+            <div class="mode-card mode-full">
+              <div>
+                <div class="mode-header">
+                  <span class="mode-tag">Option 3 • Complete Master Bank</span>
+                  <span class="nav-badge live" id="cardStatus1153">Ready</span>
+                </div>
+                <h3 class="mode-title">Complete PDF Quiz (1,153 Qs)</h3>
+                <p class="mode-desc">
+                  Every single question from Page 1 (Q1) to Page 191 (Q1153) of the PDF. Retain your progress across days or weeks with persistent browser caching.
+                </p>
+              </div>
+
+              <div class="mode-progress-box">
+                <div class="mode-progress-top">
+                  <span id="cardProgText1153">0 / 1153 Answered</span>
+                  <span id="cardAccText1153">0% Accuracy</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-fill-correct" id="cardBarCorrect1153" style="width: 0%"></div>
+                  <div class="progress-fill-wrong" id="cardBarWrong1153" style="width: 0%"></div>
+                </div>
+                <div class="mode-stats-mini">
+                  <span><span class="dot-green">●</span> <span id="cardCorrect1153">0</span> Correct</span>
+                  <span><span class="dot-red">●</span> <span id="cardWrong1153">0</span> Wrong</span>
+                  <span>Remaining: <strong id="cardRem1153">1153</strong></span>
+                </div>
+              </div>
+
+              <div class="mode-options-row">
+                <label for="selectRange1153">Order:</label>
+                <select id="selectRange1153" class="mode-select">
+                  <option value="1-1153">Exact PDF Order (Q1 → Q1153)</option>
+                  <option value="random">Shuffled Complete PDF (1,153 Qs)</option>
+                </select>
+              </div>
+
+              <div class="mode-actions">
+                <button class="btn btn-primary" data-launch-mode="1153">
+                  <span id="btnLaunchLabel1153">Start Complete PDF Quiz</span>
+                </button>
+                <button class="btn btn-secondary" data-reset-mode="1153" title="Reset Complete PDF Quiz progress">
+                  New / Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             VIEW 2: ACTIVE QUIZ RUNNER (Shared by 200, 500, 1153 & Custom Review)
+             ================================================================= -->
+        <section id="view-quiz" class="view-section">
+          <div class="quiz-workspace">
+            <!-- Left Column: Question & Green/Red Highlighted Option Tiles -->
+            <div class="quiz-main-card">
+              <div class="quiz-top-meta">
+                <div class="q-badge-group">
+                  <span class="q-number-pill" id="quizStepBadge">Question 1 of 200</span>
+                  <span class="q-pdf-pill" id="quizPdfIdBadge">PDF Q#1 • Page 1</span>
+                  <span class="q-cat-pill" id="quizCategoryBadge">Category</span>
+                </div>
+
+                <div class="quiz-score-strip">
+                  <span class="score-pill correct" title="Correct Answers in this Quiz">
+                    ✓ <span id="quizLiveCorrect">0</span>
+                  </span>
+                  <span class="score-pill wrong" title="Wrong Answers in this Quiz">
+                    ✗ <span id="quizLiveWrong">0</span>
+                  </span>
+                  <span style="color:var(--text-secondary);" id="quizLivePercent">0%</span>
+                </div>
+              </div>
+
+              <!-- Question Stem -->
+              <div class="question-stem" id="quizQuestionText">
+                Loading question...
+              </div>
+
+              <!-- 4 Option Tiles (Highlighted in Green and Red after every question answered) -->
+              <div class="options-grid" id="quizOptionsGrid" role="listbox" aria-label="Answer Options">
+                <!-- Populated dynamically -->
+              </div>
+
+              <!-- Instant Feedback Banner -->
+              <div class="feedback-banner" id="quizFeedbackBanner">
+                <div id="quizFeedbackMessage"></div>
+                <div id="quizFeedbackRight" style="font-weight:700; white-space:nowrap;"></div>
+              </div>
+
+              <!-- Controls Bar -->
+              <div class="quiz-Read-controls">
+                <div class="quiz-controls-left">
+                  <button class="btn btn-secondary" id="quizPrevBtn">
+                    ← Previous
+                  </button>
+                  <button class="btn btn-secondary btn-bookmark" id="quizBookmarkBtn" title="Bookmark / Flag this question (Shortcut: F)">
+                    <span id="quizBookmarkLabel">☆ Bookmark</span>
+                  </button>
+                  <button class="btn btn-secondary" id="quizClearAnswerBtn" title="Retry this question">
+                    Retry Question
+                  </button>
+                </div>
+
+                <div class="quiz-controls-right">
+                  <button class="btn btn-secondary" id="quizNextUnansweredBtn" title="Jump to next unanswered question">
+                    Next Unanswered
+                  </button>
+                  <button class="btn btn-primary" id="quizNextBtn">
+                    Next Question →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Interactive Question Tile Navigator -->
+            <aside class="palette-card" aria-label="Question Navigator">
+              <div class="palette-header">
+                <div class="palette-title">Question Navigator</div>
+                <span style="font-size:0.78rem; color:var(--text-secondary);" id="paletteSummaryText">0/200 Done</span>
+              </div>
+
+              <!-- Filter Tabs -->
+              <div class="palette-filters">
+                <button class="palette-filter-btn active" data-pfilter="all">All</button>
+                <button class="palette-filter-btn" data-pfilter="unanswered">Left</button>
+                <button class="palette-filter-btn" data-pfilter="correct">Green</button>
+                <button class="palette-filter-btn" data-pfilter="wrong">Red</button>
+                <button class="palette-filter-btn" data-pfilter="bookmarked">★</button>
+              </div>
+
+              <!-- Jump to Question Number -->
+              <div class="palette-jump-row">
+                <input type="number" id="paletteJumpInput" class="palette-jump-input" placeholder="Jump to step # or PDF Q#..." min="1" />
+                <button class="btn btn-secondary" id="paletteJumpBtn" style="padding:6px 12px; font-size:0.8rem;">Go</button>
+              </div>
+
+              <!-- Grid of Question Tiles -->
+              <div class="palette-grid" id="paletteGrid"></div>
+
+              <!-- Legend -->
+              <div class="palette-legend">
+                <div class="legend-item"><span class="legend-swatch swatch-correct"></span> Correct (Green)</div>
+                <div class="legend-item"><span class="legend-swatch swatch-wrong"></span> Wrong (Red)</div>
+                <div class="legend-item"><span class="legend-swatch swatch-unanswered"></span> Unanswered</div>
+                <div class="legend-item"><span class="legend-swatch swatch-flagged"></span> Bookmarked</div>
+              </div>
+
+              <div style="display:flex; gap:8px; margin-top:4px;">
+                <button class="btn btn-secondary" id="quizRetryMistakesInSessionBtn" style="flex:1; font-size:0.78rem; padding:8px;">
+                  Practice Red Tiles (<span id="sessionWrongCountBtn">0</span>)
+                </button>
+                <button class="btn btn-danger-outline" id="quizResetSessionBtn" style="font-size:0.78rem; padding:8px;">
+                  Reset Quiz
+                </button>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             VIEW 3: MISTAKE DECK & BOOKMARKS VIEW
+             ================================================================= -->
+        <section id="view-collection" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title" id="collectionTitle">Mistake Deck</h2>
+              <p style="font-size:0.88rem; color:var(--text-secondary);" id="collectionSubtitle">
+                Questions you answered incorrectly across your quizzes are automatically cached here until you master them.
+              </p>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-primary" id="collectionStartQuizBtn">
+                Attend Quiz with These Questions
+              </button>
+              <button class="btn btn-danger-outline" id="collectionClearBtn">
+                Clear List
+              </button>
+            </div>
+          </div>
+
+          <div id="collectionList" class="bank-list"></div>
+        </section>
+
+        <!-- =================================================================
+             VIEW 4: ALL 1,153 PDF QUESTION BANK EXPLORER
+             ================================================================= -->
+        <section id="view-explorer" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Complete 1,153 PDF Question Bank Explorer</h2>
+              <p style="font-size:0.88rem; color:var(--text-secondary);">
+                Search, filter by topic, inspect verified answers from pages 192–199, or test yourself directly on any question.
+              </p>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <label style="font-size:0.85rem; display:flex; align-items:center; gap:6px; cursor:pointer;">
+                <input type="checkbox" id="explorerShowAnswersToggle" checked />
+                <span>Show Verified Green Answers</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="explorer-toolbar">
+            <div class="search-input-wrap">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+              </svg>
+              <input type="text" id="explorerSearchInput" class="search-input" placeholder="Search by keyword, formula, IC number (e.g. 7408, Zener, RADAR, Q#250)..." />
+            </div>
+
+            <select id="explorerCategorySelect" class="filter-select">
+              <option value="all">All Categories (1,153)</option>
+            </select>
+
+            <select id="explorerStatusSelect" class="filter-select">
+              <option value="all">All Statuses</option>
+              <option value="correct">Mastered (Green)</option>
+              <option value="wrong">In Mistake Deck (Red)</option>
+              <option value="bookmarked">Bookmarked (★)</option>
+              <option value="unseen">Not Yet Answered</option>
+            </select>
+          </div>
+
+          <div id="explorerResultsInfo" style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:14px;"></div>
+
+          <div id="explorerList" class="bank-list"></div>
+
+          <div class="pagination-bar">
+            <button class="btn btn-secondary" id="explorerPrevPageBtn">← Previous Page</button>
+            <span id="explorerPageIndicator" style="font-size:0.88rem; font-weight:600;">Page 1 of 24</span>
+            <button class="btn btn-secondary" id="explorerNextPageBtn">Next Page →</button>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             VIEW 5: CACHE & PROGRESS MANAGER
+             ================================================================= -->
+        <section id="view-cache" class="view-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Cache &amp; Progress Storage Manager</h2>
+              <p style="font-size:0.88rem; color:var(--text-secondary);">
+                Your quiz sessions (200, 500, and 1,153 Complete PDF), selected answers, green/red tile states, bookmarks, and mistake deck are automatically persisted in local cache.
+              </p>
+            </div>
+          </div>
+
+          <div class="quiz-modes-grid">
+            <div class="mode-card">
+              <div>
+                <span class="mode-tag">Browser LocalStorage Cache</span>
+                <h3 class="mode-title">Export / Backup Progress</h3>
+                <p class="mode-desc">
+                  Download a JSON snapshot of all your quiz progress, scores, bookmarks, and mistake deck so you never lose your work across devices or browser resets.
+                </p>
+              </div>
+              <div class="mode-actions">
+                <button class="btn btn-primary" id="exportCacheBtn">Download Progress Backup (.json)</button>
+              </div>
+            </div>
+
+            <div class="mode-card mode-500">
+              <div>
+                <span class="mode-tag">Restore Snapshot</span>
+                <h3 class="mode-title">Import Progress File</h3>
+                <p class="mode-desc">
+                  Restore a previously exported ElectroQuiz Pro JSON backup file to immediately resume your 200, 500, and 1,153 question quizzes.
+                </p>
+              </div>
+              <div class="mode-actions">
+                <input type="file" id="importCacheInput" accept=".json" style="display:none;" />
+                <button class="btn btn-secondary" id="importCacheBtn" style="flex:1;">Select Backup JSON to Restore</button>
+              </div>
+            </div>
+
+            <div class="mode-card mode-full">
+              <div>
+                <span class="mode-tag">Danger Zone</span>
+                <h3 class="mode-title">Clear All Cached Data</h3>
+                <p class="mode-desc">
+                  Wipe all saved quiz progress, green/red tile history, mistake deck, and bookmarks to start completely fresh.
+                </p>
+              </div>
+              <div class="mode-actions">
+                <button class="btn btn-danger-outline" id="clearAllCacheBtn" style="flex:1;">Reset All Cached Progress</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Load Complete 1,153 PDF Questions Dataset & Application Logic -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
