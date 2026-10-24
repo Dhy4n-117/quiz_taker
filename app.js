@@ -28,6 +28,8 @@
       settings: {
         theme: 'dark',
         autoAdvance: false,
+        sidebarCollapsed: false,
+        paletteCollapsed: false,
         range200: '1-200',
         range500: '1-500',
         range1153: '1-1153'
@@ -297,8 +299,7 @@
     state.activeNav = navTarget;
 
     // Close mobile sidebar if open
-    document.getElementById('sidebar')?.classList.remove('open');
-    document.getElementById('sidebarOverlay')?.classList.remove('open');
+    closeMobileSidebar();
 
     // Update active state on sidebar buttons
     document.querySelectorAll('.nav-item').forEach((btn) => {
@@ -758,6 +759,31 @@
     listEl.appendChild(frag);
   }
 
+  function isMobileViewport() {
+    return window.matchMedia('(max-width: 860px)').matches;
+  }
+
+  function closeMobileSidebar() {
+    document.getElementById('sidebar')?.classList.remove('open');
+    document.getElementById('sidebarOverlay')?.classList.remove('open');
+    document.body.classList.remove('mobile-nav-lock');
+  }
+
+  function toggleSidebar() {
+    if (isMobileViewport()) {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      const willOpen = !sidebar?.classList.contains('open');
+      sidebar?.classList.toggle('open', willOpen);
+      overlay?.classList.toggle('open', willOpen);
+      document.body.classList.toggle('mobile-nav-lock', willOpen);
+    } else {
+      state.settings.sidebarCollapsed = !state.settings.sidebarCollapsed;
+      applySettingsToDOM();
+      saveStateToCache();
+    }
+  }
+
   // Theme & Settings Synchronization
   function applySettingsToDOM() {
     document.documentElement.setAttribute('data-theme', state.settings.theme || 'dark');
@@ -770,6 +796,24 @@
     if (autoLabel) {
       autoLabel.textContent = `Auto-Next: ${state.settings.autoAdvance ? 'On' : 'Off'}`;
     }
+
+    // Apply desktop collapsible sidebar state
+    const collapsed = Boolean(state.settings.sidebarCollapsed);
+    document.body.classList.toggle('sidebar-collapsed', collapsed);
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    if (toggleBtn) {
+      toggleBtn.classList.toggle('is-active', !collapsed);
+      toggleBtn.setAttribute('aria-expanded', String(!collapsed));
+    }
+
+    // Apply collapsible question navigator state
+    const pCollapsed = Boolean(state.settings.paletteCollapsed);
+    const pCard = document.getElementById('paletteCard');
+    const pLabel = document.getElementById('paletteCollapseLabel');
+    const pBtn = document.getElementById('paletteCollapseBtn');
+    if (pCard) pCard.classList.toggle('collapsed', pCollapsed);
+    if (pLabel) pLabel.textContent = pCollapsed ? 'Show' : 'Hide';
+    if (pBtn) pBtn.setAttribute('aria-expanded', String(!pCollapsed));
 
     ['200', '500', '1153'].forEach((m) => {
       const sel = document.getElementById('selectRange' + m);
@@ -798,18 +842,60 @@
       navigateTo('quiz-' + (last === 'custom' ? '200' : last));
     });
 
-    // Mobile menu toggle
-    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
-      document.getElementById('sidebar')?.classList.add('open');
-      document.getElementById('sidebarOverlay')?.classList.add('open');
-    });
+    // Universal Collapsible Sidebar Toggle (Desktop & Mobile) + Swipe Gestures
+    document.getElementById('sidebarToggleBtn')?.addEventListener('click', toggleSidebar);
     document.getElementById('sidebarCloseBtn')?.addEventListener('click', () => {
-      document.getElementById('sidebar')?.classList.remove('open');
-      document.getElementById('sidebarOverlay')?.classList.remove('open');
+      if (isMobileViewport()) {
+        closeMobileSidebar();
+      } else {
+        state.settings.sidebarCollapsed = true;
+        applySettingsToDOM();
+        saveStateToCache();
+      }
     });
-    document.getElementById('sidebarOverlay')?.addEventListener('click', () => {
-      document.getElementById('sidebar')?.classList.remove('open');
-      document.getElementById('sidebarOverlay')?.classList.remove('open');
+    document.getElementById('sidebarOverlay')?.addEventListener('click', closeMobileSidebar);
+
+    // Question Palette Collapse / Expand Toggle
+    document.getElementById('paletteCollapseBtn')?.addEventListener('click', () => {
+      state.settings.paletteCollapsed = !state.settings.paletteCollapsed;
+      applySettingsToDOM();
+      saveStateToCache();
+    });
+
+    // Touch Swipe Gesture Support for Mobile Drawer & Question Navigation
+    let touchStartX = 0;
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (!e.changedTouches || e.changedTouches.length !== 1) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.8) return;
+
+      if (isMobileViewport()) {
+        const sidebarOpen = document.getElementById('sidebar')?.classList.contains('open');
+        // Swipe right from left edge opens sidebar
+        if (!sidebarOpen && touchStartX < 32 && dx > 65) {
+          toggleSidebar();
+          return;
+        }
+        // Swipe left when sidebar is open closes sidebar
+        if (sidebarOpen && dx < -65) {
+          closeMobileSidebar();
+          return;
+        }
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      if (!isMobileViewport()) {
+        closeMobileSidebar();
+      }
     });
 
     // Theme & Auto-Next toggles
@@ -1012,15 +1098,21 @@
       }
     });
 
-    // Keyboard shortcuts when in Active Quiz view
+    // Keyboard shortcuts
     window.addEventListener('keydown', (e) => {
-      if (state.activeNav !== 'quiz-200' && state.activeNav !== 'quiz-500' && state.activeNav !== 'quiz-1153' && state.activeNav !== 'quiz-custom') {
-        return;
-      }
       const tag = (e.target && e.target.tagName) || '';
       if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
 
       const key = e.key.toUpperCase();
+      if (key === 'M' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        toggleSidebar();
+        return;
+      }
+
+      if (state.activeNav !== 'quiz-200' && state.activeNav !== 'quiz-500' && state.activeNav !== 'quiz-1153' && state.activeNav !== 'quiz-custom') {
+        return;
+      }
       if (key === '1' || key === 'A') {
         e.preventDefault();
         handleSelectOption(0);

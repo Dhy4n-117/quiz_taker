@@ -2,7 +2,8 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f19" />
   <title>ElectroQuiz Pro — Complete 1,153 PDF Question Bank & Interactive Quiz Suite</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -157,10 +158,12 @@
       <!-- Top Header Bar -->
       <header class="topbar">
         <div class="topbar-left">
-          <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open Sidebar Menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 12h18M3 6h18M3 18h18"/>
-            </svg>
+          <button id="sidebarToggleBtn" class="sidebar-toggle-btn" aria-label="Toggle Sidebar Navigation" aria-expanded="true" title="Toggle Sidebar Menu (M)">
+            <span class="hamburger-box">
+              <span class="hamburger-line line-1"></span>
+              <span class="hamburger-line line-2"></span>
+              <span class="hamburger-line line-3"></span>
+            </span>
           </button>
           <div class="page-breadcrumb" id="topbarTitle">Home Dashboard</div>
         </div>
@@ -474,11 +477,20 @@
             </div>
 
             <!-- Right Column: Interactive Question Tile Navigator -->
-            <aside class="palette-card" aria-label="Question Navigator">
+            <aside class="palette-card" id="paletteCard" aria-label="Question Navigator">
               <div class="palette-header">
-                <div class="palette-title">Question Navigator</div>
-                <span style="font-size:0.78rem; color:var(--text-secondary);" id="paletteSummaryText">0/200 Done</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="palette-title">Question Navigator</div>
+                  <span style="font-size:0.78rem; color:var(--text-secondary);" id="paletteSummaryText">0/200 Done</span>
+                </div>
+                <button type="button" id="paletteCollapseBtn" class="palette-collapse-btn" aria-expanded="true" title="Collapse / Expand Question Navigator">
+                  <span id="paletteCollapseLabel">Hide</span>
+                  <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
               </div>
+              <div class="palette-collapsible-body" id="paletteBody">
 
               <!-- Filter Tabs -->
               <div class="palette-filters">
@@ -513,6 +525,7 @@
                 <button class="btn btn-danger-outline" id="quizResetSessionBtn" style="font-size:0.78rem; padding:8px;">
                   Reset Quiz
                 </button>
+              </div>
               </div>
             </aside>
           </div>
